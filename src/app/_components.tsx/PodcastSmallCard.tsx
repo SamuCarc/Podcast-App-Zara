@@ -17,7 +17,7 @@ export const PodcastSmallCard = ({
 }: SmallCardType) => {
   return (
     <Link href={`podcast/${id}`} className="col-span-12 sm:col-span-3">
-      <div className="rounded shadow-[0_2px_6px_0px_rgba(0,0,0,0.3)] relative mt-16 mb-6 p-4 m-0.5">
+      <div className="card mt-16 mb-6 p-4 m-0.5">
         <div className="shadow-[0_0px_2px_0px_rgba(0,0,0,0.3)] absolute -top-9 left-1/2 transform -translate-x-1/2 rounded-full overflow-hidden">
           <Image
             className="rounded-full"

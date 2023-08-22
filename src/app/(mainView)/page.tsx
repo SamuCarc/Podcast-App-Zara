@@ -27,6 +27,7 @@ export default function Page() {
           saveTopPodcastStorage(data);
         }
       } else {
+        // Si lo tenemos guardados en el Storage y lleva menos de un día guardado
         const data = getTopPodcastFromStorage();
         if (data) {
           setPodcasts(data.feed.entry);
@@ -62,13 +63,7 @@ export default function Page() {
         countFilteredPodcast={filteredPodcasts.length}
         setSearchString={setSearchString}
       />
-      {filteredPodcasts.length === 0 ? (
-        <div className="flex justify-center items-center m-10">
-          <p className="font-bold">
-            No podcast found with this match &quot;{searchString}&quot;
-          </p>
-        </div>
-      ) : (
+      {filteredPodcasts.length !== 0 && (
         <PodcastList podcasts={filteredPodcasts} />
       )}
     </div>

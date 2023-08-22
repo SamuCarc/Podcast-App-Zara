@@ -25,6 +25,7 @@ const InputSearch = ({
         onChange={handleInputChange}
         className="text-sm font-medium pl-4 pr-4 py-1.5 border rounded-md focus:outline-none focus:border-blue-500 w-80"
         placeholder="Filter podcasts..."
+        maxLength={30}
       />
     </div>
   );
