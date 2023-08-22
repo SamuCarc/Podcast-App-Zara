@@ -4,5 +4,8 @@ export const config = {
   storage: {
     topPodcastLastFetchedKey: "lastFetched",
     topPodcastKey: "topPodcasts",
+    detailPodcastLastFetchedKey: (id: string) =>
+      `detailPodcastLastFetched_${id}`,
+    detailPodcastKey: (id: string) => `detailPodcast_${id}`,
   },
 };
