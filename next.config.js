@@ -7,6 +7,8 @@ const nextConfig = {
       "is4-ssl.mzstatic.com",
       "is2-ssl.mzstatic.com",
       "is1-ssl.mzstatic.com",
+      "www.omnycontent.com",
+      "*",
     ], // puedes añadir más si es necesario
   },
 };

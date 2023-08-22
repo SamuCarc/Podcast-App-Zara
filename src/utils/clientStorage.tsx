@@ -1,5 +1,5 @@
 import { config } from "@/config";
-import { DetailPodcast, TopPodcastsData } from "@/types/topPodcast";
+import { PodcastDataType, TopPodcastsData } from "@/types/topPodcast";
 
 const STORAGE_KEY = config.storage.topPodcastKey;
 const LAST_FETCHED_KEY = config.storage.topPodcastLastFetchedKey;
@@ -40,7 +40,7 @@ export const shouldFetchNewTopPodcast = (): boolean => {
 // DETAIL PODCAST DATA FROM CLIENT
 export const saveDetailPodcastStorage = (
   id: string,
-  data: DetailPodcast
+  data: PodcastDataType
 ): void => {
   localStorage.setItem(
     config.storage.detailPodcastKey(id),
@@ -54,11 +54,11 @@ export const saveDetailPodcastStorage = (
 
 export const getDetailPodcastFromStorage = (
   id: string
-): DetailPodcast | null => {
+): PodcastDataType | null => {
   const data = localStorage.getItem(config.storage.detailPodcastKey(id));
   if (data) {
     try {
-      const parsedData: DetailPodcast = JSON.parse(data);
+      const parsedData: PodcastDataType = JSON.parse(data);
       return parsedData;
     } catch (error) {
       console.error(

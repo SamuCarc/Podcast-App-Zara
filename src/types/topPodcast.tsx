@@ -23,15 +23,88 @@ export type TopPodcastsData = {
 };
 
 export type DetailPodcast = {
-  results: {
-    artistId: number;
-    collectionId: number;
-    trackId: number;
-    artistName: string;
-    feedUrl: string;
-    artworkUrl30: string;
-    artworkUrl60: string;
-    artworkUrl100: string;
-    artworkUrl600: string;
+  results: [
+    {
+      artistName: string;
+      collectionName: string;
+      feedUrl: string;
+      artworkUrl600: string;
+    }
+  ];
+};
+
+export type ResponseXML = {
+  elements: {
+    type: "element";
+    elements: {
+      type: "element";
+      elements: GeneralDataXMLItem[] | ImageXMLItem[] | EpisodeXMLItem[];
+    }[];
+  }[];
+};
+
+export type GeneralDataXMLItem = {
+  name: "title" | "description" | "itunes:author";
+  elements: {
+    text: string;
+    cdata: string;
+  }[];
+};
+
+export type ImageXMLItem = {
+  name: "image";
+  elements: {
+    name: "url";
+    elements: [
+      {
+        text: string;
+      }
+    ];
+  }[];
+};
+
+export type GeneralEpisodeDataXMLItem = {
+  name:
+    | "title"
+    | "description"
+    | "author"
+    | "itunes:title"
+    | "itunes:duration"
+    | "guid";
+  elements: [
+    {
+      text: string;
+      cdata: string;
+    }
+  ];
+};
+
+export type UrlMp3EpisodeDataXMLItem = {
+  name: "enclosure";
+  attributes: {
+    url: string;
   };
+};
+
+export type EpisodeXMLItem = {
+  name: "item";
+  elements: GeneralEpisodeDataXMLItem[] | UrlMp3EpisodeDataXMLItem[];
+};
+
+export type Episode = {
+  id: string;
+  title: string;
+  description: string;
+  author: string;
+  duration: string;
+  urlMp3: string;
+};
+
+export type PodcastDataType = {
+  id: string;
+  title: string;
+  description: string;
+  author: string;
+  imageUrl: string;
+  episodes: Episode[];
 };
