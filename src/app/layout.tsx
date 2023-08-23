@@ -16,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="container mx-auto h-16 ">
+      <body className="container mx-auto">
         <LoadingProvider>
           <Header />
-          {children}
+          <div className="mb-10">{children}</div>
         </LoadingProvider>
       </body>
     </html>

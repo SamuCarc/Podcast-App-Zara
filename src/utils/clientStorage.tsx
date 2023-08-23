@@ -1,23 +1,36 @@
 import { config } from "@/config";
 import { PodcastDataType, TopPodcastsData } from "@/types/topPodcast";
+import { compress, decompress } from "lz-string";
 
 const STORAGE_KEY = config.storage.topPodcastKey;
 const LAST_FETCHED_KEY = config.storage.topPodcastLastFetchedKey;
 
 // TOP PODCASTS DATA FROM CLIENT
 export const saveTopPodcastStorage = (data: TopPodcastsData): void => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const compressedValue = compress(JSON.stringify(data));
+
+  if (!compressedValue) {
+    console.error("Error compressing stored Podcasts data:");
+  }
+
+  localStorage.setItem(STORAGE_KEY, compressedValue);
   localStorage.setItem(LAST_FETCHED_KEY, Date.now().toString());
 };
 
 export const getTopPodcastFromStorage = (): TopPodcastsData | null => {
-  const data = localStorage.getItem(STORAGE_KEY);
+  const compressedValue = localStorage.getItem(STORAGE_KEY);
+  if (!compressedValue) {
+    console.error("Error getting stored Podcasts data:");
+    return null;
+  }
+
+  const data = decompress(compressedValue);
   if (data) {
     try {
       const parsedData: TopPodcastsData = JSON.parse(data);
       return parsedData;
     } catch (error) {
-      console.error("Error parsing stored podcast data:", error);
+      console.error("Error decompressing stored Podcasts data:", error);
       return null;
     }
   }
@@ -42,10 +55,12 @@ export const saveDetailPodcastStorage = (
   id: string,
   data: PodcastDataType
 ): void => {
-  localStorage.setItem(
-    config.storage.detailPodcastKey(id),
-    JSON.stringify(data)
-  );
+  const compressedValue = compress(JSON.stringify(data));
+  if (!compressedValue) {
+    console.error("Error compressing stored Detail Podcast data:");
+  }
+
+  localStorage.setItem(config.storage.detailPodcastKey(id), compressedValue);
   localStorage.setItem(
     config.storage.detailPodcastLastFetchedKey(id),
     Date.now().toString()
@@ -55,16 +70,21 @@ export const saveDetailPodcastStorage = (
 export const getDetailPodcastFromStorage = (
   id: string
 ): PodcastDataType | null => {
-  const data = localStorage.getItem(config.storage.detailPodcastKey(id));
+  const compressedValue = localStorage.getItem(
+    config.storage.detailPodcastKey(id)
+  );
+  if (!compressedValue) {
+    console.error("Error getting stored Detail Podcast data:");
+    return null;
+  }
+
+  const data = decompress(compressedValue);
   if (data) {
     try {
       const parsedData: PodcastDataType = JSON.parse(data);
       return parsedData;
     } catch (error) {
-      console.error(
-        `Error parsing stored detail podcast data for ID ${id}:`,
-        error
-      );
+      console.error("Error decompressing stored Detail Podcast data:", error);
       return null;
     }
   }

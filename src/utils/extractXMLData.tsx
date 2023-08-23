@@ -102,7 +102,7 @@ export function extractEpisodesFromXML(responseXML: ResponseXML): Episode[] {
                 episode.author = dataElement;
                 break;
               case "guid":
-                episode.id = dataElement;
+                episode.id = encodeURIComponent(dataElement);
                 break;
               case "itunes:duration":
                 episode.duration = formatDuration(dataElement);
