@@ -68,9 +68,9 @@ export type GeneralEpisodeDataXMLItem = {
     | "title"
     | "description"
     | "author"
-    | "itunes:title"
     | "itunes:duration"
-    | "guid";
+    | "guid"
+    | "pubDate";
   elements: [
     {
       text: string;
@@ -98,6 +98,7 @@ export type Episode = {
   author: string;
   duration: string;
   urlMp3: string;
+  date: string;
 };
 
 export type PodcastDataType = {

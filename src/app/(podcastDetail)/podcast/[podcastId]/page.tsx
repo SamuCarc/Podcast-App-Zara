@@ -1,5 +1,6 @@
 "use client";
 
+import { EpisodesCard } from "@/app/_components.tsx/EpisodesCard";
 import { PodcastCard } from "@/app/_components.tsx/PodcastCard";
 import { PodcastDataType } from "@/types/topPodcast";
 import {
@@ -38,20 +39,21 @@ export default function Page({ params }: { params: { podcastId: string } }) {
     fetchAndSetDetailPodcast();
   }, [params.podcastId]);
 
-  useEffect(() => {
-    console.log("PODCAST");
-    console.log(podcast);
-  }, [podcast]);
-
   if (podcast && params.podcastId) {
     return (
-      <PodcastCard
-        title={podcast.title}
-        imageUrl={podcast.imageUrl}
-        author={podcast.author}
-        description={podcast.description}
-        id={podcast.id}
-      />
+      <div className="flex">
+        <PodcastCard
+          title={podcast.title}
+          imageUrl={podcast.imageUrl}
+          author={podcast.author}
+          description={podcast.description}
+          id={podcast.id}
+        />
+        <EpisodesCard
+          episodes={podcast.episodes}
+          podcastId={params.podcastId}
+        />
+      </div>
     );
   } else {
     return <></>;

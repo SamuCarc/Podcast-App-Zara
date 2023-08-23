@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="container mx-auto h-16">{children}</body>
+      <body className="container mx-auto h-16 my-5">{children}</body>
     </html>
   );
 }

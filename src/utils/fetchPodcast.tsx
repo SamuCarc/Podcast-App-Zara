@@ -31,23 +31,20 @@ export const fetchTopPodcasts = async (): Promise<TopPodcastsData | null> => {
 const fetchXMLData = async (url: string): Promise<ResponseXML | null> => {
   try {
     const response = await fetch(config.proxyUrlHerokuapp + url);
-
     if (response.ok) {
       const textXML = await response.text();
       const data = xml2json(textXML);
       return JSON.parse(data);
     } else {
-      const response = await fetch(config.proxyUrl + "/" + url);
-      if (response.ok) {
-        const textXML = await response.text();
-        const data = xml2json(textXML);
-        return JSON.parse(data);
-      }
       console.error("Error fetching XML data");
       return null;
     }
   } catch (error) {
-    console.error("Error fetching XML data", error);
+    console.error(
+      "Error fetching XML data",
+      config.proxyUrlHerokuapp + url,
+      error
+    );
     return null;
   }
 };
@@ -69,7 +66,6 @@ export const fetchDetailPodcast = async (
           const parsedData = await fetchXMLData(data?.results[0].feedUrl);
           if (parsedData) {
             const extractDescriptionXML = extractDescriptionFromXML(parsedData);
-
             const extractedEpisodesData = extractEpisodesFromXML(parsedData);
 
             if (extractedEpisodesData) {
