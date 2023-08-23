@@ -22,7 +22,7 @@ export const PodcastCard = ({
   return (
     <div className="card w-72 p-3 divide-y mr-20 self-start">
       <Link
-        href={`podcast/${id}`}
+        href={`/podcast/${id}`}
         className="flex justify-center mx-10 mt-3 mb-6"
       >
         {!isImageLoaded && (
@@ -39,18 +39,20 @@ export const PodcastCard = ({
           />
         </div>
       </Link>
-      <Link href={`podcast/${id}`}>
+      <Link href={`/podcast/${id}`}>
         <div className="p-4">
-          <p className="text-base font-bold mb-1">{title}</p>
-          <p className="text-sm font-normal text-gray-600 italic">
+          <p className="text-base font-bold">{title}</p>
+          <p className="text-[15px] font-normal text-gray-600 italic">
             by {author}
           </p>
         </div>
       </Link>
       <div className="p-4">
-        <p className="text-sm font-semibold text-gray-800 mb-2">Description:</p>
+        <p className="text-[15px] font-semibold text-gray-800 mb-2">
+          Description:
+        </p>
         <p
-          className="text-sm font-normal text-gray-600 italic break-words"
+          className="text-[15px] font-normal text-gray-600 italic break-words"
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </div>

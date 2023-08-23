@@ -32,7 +32,7 @@ export const EpisodesDetail = ({ episodes, podcastId }: EpisodesDetailProp) => {
           }`}
         >
           <div className="col-span-8 p-2 truncate">
-            <Link href={`podcast/${podcastId}/episode/${episode.id}`}>
+            <Link href={`/podcast/${podcastId}/episode/${episode.id}`}>
               <p className="text-base text-sky-600 font-normal">
                 {episode.title}
               </p>
