@@ -2,6 +2,7 @@
 
 import { EpisodesCard } from "@/app/_components.tsx/EpisodesCard";
 import { PodcastCard } from "@/app/_components.tsx/PodcastCard";
+import { useLoading } from "@/app/context/LoadingContext";
 import { PodcastDataType } from "@/types/topPodcast";
 import {
   getDetailPodcastFromStorage,
@@ -14,9 +15,10 @@ import { useEffect, useState } from "react";
 export default function Page({ params }: { params: { podcastId: string } }) {
   // Podcast del que queremos obtener el detalle
   const [podcast, setPodcast] = useState<PodcastDataType>();
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const { setIsLoading } = useLoading();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchAndSetDetailPodcast = async () => {
       // Verifica si se necesita buscar el podcast
       if (shouldFetchNewDetailPodcast(params.podcastId)) {
@@ -37,7 +39,7 @@ export default function Page({ params }: { params: { podcastId: string } }) {
     };
 
     fetchAndSetDetailPodcast();
-  }, [params.podcastId]);
+  }, [params.podcastId, setIsLoading]);
 
   if (podcast && params.podcastId) {
     return (

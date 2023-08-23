@@ -9,8 +9,11 @@ import {
 import { EntryTopPodcast } from "@/types/topPodcast";
 import { PodcastList } from "../_components.tsx/PodcastList";
 import InputSearch from "../_components.tsx/InputSearch";
+import { useLoading } from "../context/LoadingContext";
 
 export default function Page() {
+  const { setIsLoading } = useLoading();
+
   const [searchString, setSearchString] = useState("");
   const [podcasts, setPodcasts] = useState<EntryTopPodcast[]>([]);
   const [filteredPodcasts, setFilteredPodcasts] = useState<EntryTopPodcast[]>(
@@ -18,6 +21,7 @@ export default function Page() {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchAndSetPodcasts = async () => {
       // Verifica si se necesita buscar nuevos podcasts
       if (shouldFetchNewTopPodcast()) {
@@ -25,12 +29,14 @@ export default function Page() {
         if (data) {
           setPodcasts(data.feed.entry);
           saveTopPodcastStorage(data);
+          setIsLoading(false);
         }
       } else {
         // Si lo tenemos guardados en el Storage y lleva menos de un día guardado
         const data = getTopPodcastFromStorage();
         if (data) {
           setPodcasts(data.feed.entry);
+          setIsLoading(false);
         }
       }
     };

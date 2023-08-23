@@ -73,8 +73,6 @@ export function extractEpisodesFromXML(responseXML: ResponseXML): Episode[] {
           "name" in element && element.name === "item"
       );
       // Convertir cada item a un objeto Episode
-      console.log("episodeItems");
-      console.log(episodeItems);
       return episodeItems.map((item): Episode => {
         let episode: Partial<Episode> = {};
 

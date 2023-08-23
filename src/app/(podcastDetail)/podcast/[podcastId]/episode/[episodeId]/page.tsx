@@ -1,6 +1,7 @@
 "use client";
 
 import { PodcastCard } from "@/app/_components.tsx/PodcastCard";
+import { useLoading } from "@/app/context/LoadingContext";
 import { Episode, PodcastDataType } from "@/types/topPodcast";
 import {
   getDetailPodcastFromStorage,
@@ -18,9 +19,10 @@ export default function Page({
   // Podcast del que queremos obtener el detalle
   const [podcast, setPodcast] = useState<PodcastDataType>();
   const [episode, setEpisode] = useState<Episode>();
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const { setIsLoading } = useLoading();
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchAndSetDetailPodcast = async () => {
       // Verifica si se necesita buscar el podcast
       if (shouldFetchNewDetailPodcast(params.podcastId)) {
@@ -53,7 +55,7 @@ export default function Page({
         console.error("Episode not found. Please try again later");
       }
     }
-  }, [params.episodeId, podcast]);
+  }, [params.episodeId, podcast, setIsLoading]);
 
   if (podcast && params.podcastId && episode) {
     return (

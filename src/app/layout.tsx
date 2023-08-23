@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import Header from "./_components.tsx/Header";
+import { LoadingProvider } from "./context/LoadingContext";
 
 export const metadata: Metadata = {
   title: "Podcast Zara",
@@ -14,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="container mx-auto h-16 my-5">{children}</body>
+      <body className="container mx-auto h-16 ">
+        <LoadingProvider>
+          <Header />
+          {children}
+        </LoadingProvider>
+      </body>
     </html>
   );
 }
