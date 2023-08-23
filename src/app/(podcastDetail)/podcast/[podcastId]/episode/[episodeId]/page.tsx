@@ -41,7 +41,7 @@ export default function Page({
     };
 
     fetchAndSetDetailPodcast();
-  }, [params.podcastId]);
+  }, [params.podcastId, setIsLoading]);
 
   useEffect(() => {
     if (podcast && podcast?.episodes) {

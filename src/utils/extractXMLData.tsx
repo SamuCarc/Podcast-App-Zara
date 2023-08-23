@@ -1,11 +1,10 @@
 import {
   Episode,
   EpisodeXMLItem,
-  GeneralEpisodeDataXMLItem,
+  GeneralDataXMLItem,
+  ImageXMLItem,
   ResponseXML,
-  UrlMp3EpisodeDataXMLItem,
 } from "@/types/topPodcast";
-import { SlowBuffer } from "buffer";
 
 // Extraemos los datos del podcast del XML
 export const extractDescriptionFromXML = (
@@ -56,7 +55,11 @@ export function extractEpisodesFromXML(responseXML: ResponseXML): Episode[] {
     const validElement = responseXML.elements.find(
       (element) => element.type === "element"
     );
-    let elements;
+    let elements:
+      | GeneralDataXMLItem[]
+      | ImageXMLItem[]
+      | EpisodeXMLItem[]
+      | undefined;
     if (validElement) {
       const innerValidElement = validElement.elements.find(
         (innerElement) => innerElement.type === "element"
@@ -68,10 +71,10 @@ export function extractEpisodesFromXML(responseXML: ResponseXML): Episode[] {
     }
 
     if (elements) {
-      const episodeItems = elements.filter(
-        (element): element is EpisodeXMLItem =>
-          "name" in element && element.name === "item"
+      const episodeCandidates = (elements as EpisodeXMLItem[]).filter(
+        (element) => "name" in element && element.name === "item"
       );
+      const episodeItems = episodeCandidates;
       // Convertir cada item a un objeto Episode
       return episodeItems.map((item): Episode => {
         let episode: Partial<Episode> = {};

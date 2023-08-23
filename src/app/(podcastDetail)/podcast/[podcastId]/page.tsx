@@ -25,15 +25,15 @@ export default function Page({ params }: { params: { podcastId: string } }) {
         const data = await fetchDetailPodcast(params.podcastId);
         if (data) {
           setPodcast(data);
-          saveDetailPodcastStorage(params.podcastId, data);
           setIsLoading(false);
+          saveDetailPodcastStorage(params.podcastId, data);
         }
       } else {
         // Si lo tenemos guardados en el Storage y lleva menos de un día guardado
         const data = getDetailPodcastFromStorage(params.podcastId);
         if (data) {
-          setPodcast(data);
           setIsLoading(false);
+          setPodcast(data);
         }
       }
     };

@@ -28,21 +28,21 @@ export default function Page() {
         const data = await fetchTopPodcasts();
         if (data) {
           setPodcasts(data.feed.entry);
-          saveTopPodcastStorage(data);
           setIsLoading(false);
+          saveTopPodcastStorage(data);
         }
       } else {
         // Si lo tenemos guardados en el Storage y lleva menos de un día guardado
         const data = getTopPodcastFromStorage();
         if (data) {
-          setPodcasts(data.feed.entry);
           setIsLoading(false);
+          setPodcasts(data.feed.entry);
         }
       }
     };
 
     fetchAndSetPodcasts();
-  }, []);
+  }, [setIsLoading]);
 
   useEffect(() => {
     if (podcasts.length > 0) {
